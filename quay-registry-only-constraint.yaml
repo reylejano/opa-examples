@@ -1,0 +1,30 @@
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: k8sallowedrepos
+metadata:
+  name: quay-registry-only
+  annotations:
+    {}
+#    key: string
+  labels:
+    {}
+#    key: string
+#  namespace: string
+spec:
+  enforcementAction: dryrun
+  parameters:
+    repos:
+      - quay.io
+  match:
+    kinds:
+      - apiGroups:
+          - '*'
+        kinds:
+          - Pod
+    excludedNamespaces:
+      - kube-system
+      - cattle-system
+    labelSelector:
+      matchExpressions: []
+    namespaceSelector:
+      matchExpressions: []
+    scope: Namespaced
